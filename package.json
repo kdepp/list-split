@@ -1,0 +1,30 @@
+{
+  "name": "list-split",
+  "version": "0.1.0",
+  "description": "toolkit for splitting list & string",
+  "keywords": [
+    "split",
+    "list",
+    "string"
+  ],
+  "author": "kdepp <kdepp.cd@gmail.com>",
+  "main": "dist/list_split.js",
+  "scripts": {
+    "dev": "webpack-dev-server --inline --hot --config webpack.dev.config.js --port 8384 --content-base example/",
+    "build": "npm run build:babel",
+    "build:babel": "babel src --out-dir dist",
+    "test": "mocha --compilers js:babel-core/register",
+    "test:watch": "mocha -w --compilers js:babel-core/register"
+  },
+  "devDependencies": {
+    "babel-core": "^6.5.2",
+    "babel-loader": "^6.2.2",
+    "babel-plugin-transform-object-assign": "^6.5.0",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "webpack": "^1.12.13",
+  },
+  "license": "MIT"
+}
