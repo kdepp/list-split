@@ -9,8 +9,9 @@ var equal = function (x) {
     };
 };
 
-describe('Split', function () {
+console.log(sp);
 
+describe('Split', function () {
     describe('breakDelims', function () {
         it('all break in the middle', function () {
             var src = sp.breakDelims([equal(',')], "ab,cd,ef"),
@@ -114,7 +115,7 @@ describe('Split', function () {
 
     describe('insertBlanks', function () {
         it('three consecutive delims', function () {
-            var src = sp.insertBlanks(sp.breakDelims([equal(',')], "ab,,,cd,,ef")),
+            var src = sp.insertBlanks(sp.breakDelims([equal(',')], "ab,,,cd,,ef"), ""),
                 dst = [
                     {t: "Text", s: "ab"},
                     {t: "Delim", s: ","},
