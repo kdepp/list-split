@@ -155,6 +155,7 @@ const factory = (type) => {
 
 module.exports = {
     ...factory(stringType),
-    factory
+    factory,
+    dot
 };
 

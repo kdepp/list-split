@@ -8,7 +8,7 @@
     "string"
   ],
   "author": "kdepp <kdepp.cd@gmail.com>",
-  "main": "dist/list_split.js",
+  "main": "dist/split.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --config webpack.dev.config.js --port 8384 --content-base example/",
     "build": "npm run build:babel",
