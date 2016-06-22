@@ -40,8 +40,8 @@ split(
 ### API
 
 #### Core
-- ##### split(postProcess, predicates, list)
-    Split the list according to predicates, and do whatever you want in the postProcess
+- split(postProcess, predicates, list)
+    - Split the list according to predicates, and do whatever you want in the postProcess
     - **param**: `postProcess` { Function }
     - **param**: `predicates` { [Function] }
     - **param**: `list` { Array | String }
@@ -61,26 +61,51 @@ split(
 
 #### for postProcess
 
-* dropInitialBlank
-    * e.g. `split(dropDelims, oneOf(','), ",foo,bar")` should be `["","foo","bar"]`, but with dropInitialBlank, it will be `["foo", "bar"]`
-* dropFinalBlank
-    * e.g. `split(dropDelims, oneOf(','), "foo,bar,")` should be `["foo","bar",""]`, but with dropFinalBlank, it will be `["foo", "bar"]`
-* insertBlanks
-    * insert a blank between two consecutive delimeters
-    * e.g. `split(dropDelims, oneOf(','), "foo;;bar")` should be `["foo","bar"]`, but with insertBlanks, it will be `["foo", "", "bar"]`
-* dropDelims
-    * as default, we will keep the delimeters in the result, but you can easily remove them with dropDelims
-* condense
-    * combine consecutive delimeters into one element
-    * e.g. `split(id, oneOf(','), "foo;;bar")` should be `["foo",";",";","bar"]`, but with condense, it will be `["foo", ";;", "bar"]`
-* mergeDelimsLeft
-    * merge the left most delimeters in a row with the left element
-    * e.g. `split(id, oneOf(','), "foo;;bar")` should be `["foo",";",";","bar"]`, but with mergeDelimsLeft, it will be `["foo;", ";", "bar"]`
-* mergeDelimsRight
-    * merge the right most delimeters in a row with the right element
-    * e.g. `split(id, oneOf(','), "foo;;bar")` should be `["foo",";",";","bar"]`, but with mergeDelimsRight, it will be `["foo", ";", ";bar"]`
+- dropInitialBlank
+``` js
+split(dropDelims, oneOf(','), ",foo,bar")                           // ["","foo","bar"]
+split(dot(dropDelims, dropInitialBlank), oneOf(','), ",foo,bar")    // ["foo","bar"]
+```
 
-combine the postProcess with `dot` (it's just function compose)
+- dropFinalBlank
+``` js
+split(dropDelims, oneOf(','), "foo,bar,")                           // ["foo","bar",""]
+split(dot(dropDelims, dropFinalBlank), oneOf(','), ",foo,bar")      // ["foo","bar"]
+```
+
+- insertBlanks
+    * insert a blank between two consecutive delimeters
+``` js
+split(dropDelims, oneOf(','), "foo;;bar")                           // ["foo","bar"]
+split(dot(dropDelims, insertBlanks), oneOf(','), ",foo,bar")        // ["foo","","bar"]
+```
+
+- dropDelims
+    * as default, we will keep the delimeters in the result, but you can easily remove them with dropDelims
+
+- condense
+    * combine consecutive delimeters into one element
+``` js
+split(id, oneOf(';'), "foo;;bar")                               // ["foo",";",";","bar"]
+split(condense, oneOf(';'), ",foo;;bar")                         // ["foo",";;","bar"]
+```
+
+- mergeDelimsLeft
+    * merge the left most delimeters in a row with the left element
+``` js
+split(id, oneOf(';'), "foo;;bar")                               // ["foo",";",";","bar"]
+split(mergeDelimsLeft, oneOf(';'), ",foo;;bar")                 // ["foo;", ";", "bar"]
+```
+
+- mergeDelimsRight
+    * merge the right most delimeters in a row with the right element
+``` js
+split(id, oneOf(';'), "foo;;bar")                               // ["foo",";",";","bar"]
+split(mergeDelimsRight, oneOf(';'), ",foo;;bar")                 // ["foo", ";", ";bar"]
+```
+
+- dot
+    * combine the postProcess with `dot` (it's just function compose)
 ``` js
 dot(dropInitialBlank, dropDelims)
 ```
